@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 var checkBpm = require('./checkBpm.js');
 var checkSpo2 = require('./checkSpo2.js');
-var checkRespRate = require('./checkRespRate.js');
+var checkRespRate = require('./checkrespRate.js');
 
 function vitalsAreOk(bpm, spo2, respRate) {
     var BPM = checkBpm.checkBpm(bpm);
