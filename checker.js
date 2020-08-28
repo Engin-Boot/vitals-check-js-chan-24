@@ -7,9 +7,7 @@ function vitalsAreOk(bpm, spo2, respRate) {
     var BPM = checkBpm.checkBpm(bpm);
     var Spo2 = checkSpo2.checkSpo2(spo2);
     var RespRate = checkRespRate.checkRespRate(respRate);
-    if(BPM[0]==false || Spo2[0]==false || RespRate[0]==false )
-        return false
-    return true
+    return(BPM[0] && Spo2[0]&& RespRate[0])
 }
 function getReport(bpm, spo2, respRate)
 {
