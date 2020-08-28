@@ -1,17 +1,68 @@
 const expect = require('chai').expect;
 
 function vitalsAreOk(bpm, spo2, respRate) {
-    if(bpm < 70 || bpm > 150) {
-        return false;
-    } else if(spo2 < 90) {
-        return false;
-    } else if(respRate < 30 || respRate > 95) {
-        return false;
-    }
-    return true;
+    var BPM = checkBpm(bpm);
+    var Spo2 = checkSpo2(spo2);
+    var RespRate = checkRespRate(respRate);
+    if(BPM[0]==false || Spo2[0]==false || RespRate[0]==false )
+        return false
+    else
+        return true
 }
 
-expect(vitalsAreOk(100, 95, 70)).to.be.true;
-expect(vitalsAreOk(50, 95, 70)).to.be.false;
+function checkBpm(bpm)
+{
+    if(bpm<70)
+        return [false, "Low BPM"]
+    else if (bpm > 150) {
+        return [false, "High BPM"]
+    } 
+    else {
+        return [true, "Normal"]
+    }
+}
 
+function checkSpo2(spo2)
+{
+    if(spo2<90)
+        return [false, "Low Spo2"]
+    else {
+        return [true, "Normal"]
+    }
+}
+
+function checkRespRate(respRate)
+{
+    if(respRate < 30)
+        return [false, "Low RespRate"]
+    else if (respRate > 95) {
+        return [false, "High RespRate"]
+    } 
+    else {
+        return [true, "Normal"]
+    }
+}
+
+function getReport(bpm, spo2, respRate)
+{
+    if(vitalsAreOk(bpm, spo2, respRate))
+        console.log("Vitals Status : All Vitals are Normal ");
+    else
+        console.log("Vitals Status : Vitals not looking good ");
+    console.log("BPM: "+checkBpm(bpm)[1]);
+    console.log("SPO2: "+checkSpo2(spo2)[1]);
+    console.log("Respiratory rate: "+checkRespRate(respRate)[1]);
+    
+}
+
+expect(vitalsAreOk(100, 100, 70)).to.be.true; // Normal
+expect(vitalsAreOk(60, 100, 70)).to.be.false; // Low BPM
+expect(vitalsAreOk(100, 80, 70)).to.be.false; // Low SPO2
+expect(vitalsAreOk(100, 100, 20)).to.be.false; // Low RespiratoryRate
+expect(vitalsAreOk(160, 100, 70)).to.be.false; // High BPM
+expect(vitalsAreOk(100, 95, 100)).to.be.false; // High RespiratoryRate
+expect(vitalsAreOk(160, 95, 100)).to.be.false; // High BPM and RespiratoryRate
+expect(vitalsAreOk(60, 80, 20)).to.be.false; // Low BPM, SPO2 and RespiratoryRate
+
+getReport(100, 95, 70);
 console.log('checker is done');
